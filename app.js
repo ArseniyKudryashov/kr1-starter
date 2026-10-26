@@ -34,7 +34,7 @@ function render(items) {
 
 function applyFilter() {
   const value = select.value;
-  const filtered = value === "all" ? announcements : announcements.filter((a) => a.category === value);
+  const filtered = value === "all" ? announcements : announcements.filter((a) => a.category.toLowerCase() === value);
   render(filtered);
 }
 
