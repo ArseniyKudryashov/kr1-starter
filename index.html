@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Дошка оголошень кафедри</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="index.html">Оголошення</a>
+      <nav class="nav" aria-label="Головна навігація">
+        <ul>
+          <li><a href="index.html" aria-current="page">Стрічка</a></li>
+          <li><a href="Add.html">Додати</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="toolbar">
+      <h1>Стрічка оголошень</h1>
+      <div class="filter">
+        <label for="category">Категорія</label>
+        <select id="category">
+          <option value="all">усі</option>
+          <option value="навчання">навчання</option>
+          <option value="події">події</option>
+          <option value="адмін">адмін</option>
+        </select>
+      </div>
+    </section>
+
+    <section aria-labelledby="list-title">
+      <h2 id="list-title" class="visually-hidden">Оголошення</h2>
+      <ul id="list" class="cards"></ul>
+      <p id="empty" class="muted" hidden>Нічого не знайдено.</p>
+    </section>
+
+    <!-- Сюди додається блок «Найближчі вихідні» (завдання 2) -->
+  </main>
+
+  <footer class="site-footer">
+    <p>© Кафедра інформаційних технологій · Дошка оголошень</p>
+  </footer>
+</body>
+</html>
