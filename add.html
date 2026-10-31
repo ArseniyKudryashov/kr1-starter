@@ -21,19 +21,19 @@
 
   <main>
     <h1>Нове оголошення</h1>
-    <div class="form-box">
-      <div>Заголовок</div>
-      <input type="text" placeholder="Заголовок">
-      <div>Категорія</div>
-      <select>
-        <option>навчання</option>
-        <option>події</option>
-        <option>адмін</option>
+    <form class="form-box" method="post" action="/">
+      <label for="title">Заголовок</label>
+      <input id="title"  type="text" placeholder="Заголовок" required>
+      <label for="category">Категорія</label>
+      <select id="category" name="category">
+        <option value="навчання">навчання</option>
+        <option value="події">події</option>
+        <option value="адмін">адмін</option>
       </select>
-      <div>Текст</div>
-      <textarea rows="5" placeholder="Текст оголошення"></textarea>
-      <div class="actions"><a href="#" class="btn">Опублікувати</a></div>
-    </div>
+      <label for="text">Текст</label>
+      <textarea id="text" name="text" rows="5" placeholder="Текст оголошення" required></textarea>
+      <div class="actions"><button class="btn" type="submit">Опублікувати</button></div>
+    </form>
   </main>
 
   <footer class="site-footer">

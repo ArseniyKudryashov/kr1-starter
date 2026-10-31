@@ -34,9 +34,72 @@ function render(items) {
 
 function applyFilter() {
   const value = select.value;
-  const filtered = value === "all" ? announcements : announcements.filter((a) => a.category === value);
+  const filtered = value === "all" ? announcements : announcements.filter((a) => a.category.toLowerCase() === value);
   render(filtered);
 }
 
 select.addEventListener("change", applyFilter);
 render(announcements);
+
+// Блок «Державні свята України» (завдання 2)
+// API: https://date.nager.at/api/v3/PublicHolidays/2026/UA
+const holidaysBtn = document.querySelector("#holidays-btn");
+const holidaysStatus = document.querySelector("#holidays-status");
+const holidaysList = document.querySelector("#holidays-list");
+function getTodayLocalISO() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+async function loadHolidays() {
+  if (!holidaysBtn || !holidaysStatus || !holidaysList) {
+    return;
+  }
+  holidaysBtn.disabled = true;
+  holidaysStatus.textContent = "Завантажую…";
+  try {
+    const year = new Date().getFullYear();
+    const response = await fetch(`https://date.nager.at/api/v3/PublicHolidays/${year}/UA`);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+    const data = await response.json();
+    const todayStr = getTodayLocalISO();
+    const upcoming = Array.isArray(data)
+      ? data
+          .filter((h) => typeof h.date === "string" && h.date > todayStr)
+          .sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0))
+          .slice(0, 3)
+      : [];
+    // Очищення перед рендером, щоб повторне натискання не дублювало список.
+    holidaysList.textContent = "";
+    if (upcoming.length === 0) {
+      const li = document.createElement("li");
+      li.className = "card";
+      li.textContent = "До кінця року свят більше немає.";
+      holidaysList.append(li);
+    } else {
+      for (const h of upcoming) {
+        const li = document.createElement("li");
+        li.className = "card";
+        const time = document.createElement("time");
+        time.dateTime = h.date;
+        time.textContent = h.date;
+        const span = document.createElement("span");
+        span.textContent = ` — ${h.localName}`;
+        li.append(time, span);
+        holidaysList.append(li);
+      }
+    }
+    holidaysStatus.textContent = "";
+  } catch (error) {
+    holidaysStatus.textContent = "Не вдалося завантажити свята. Перевірте з’єднання з інтернетом і спробуйте ще раз.";
+  } finally {
+    holidaysBtn.disabled = false;
+  }
+}
+if (holidaysBtn) {
+  holidaysBtn.addEventListener("click", loadHolidays);
+}
