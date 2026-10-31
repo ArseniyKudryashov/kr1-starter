@@ -40,7 +40,16 @@
       <p id="empty" class="muted" hidden>Нічого не знайдено.</p>
     </section>
 
-    <!-- Сюди додається блок «Найближчі вихідні» (завдання 2) -->
+    <section aria-labelledby="holidays-title" class="holidays">
+      <div class="toolbar">
+        <h2 id="holidays-title">Державні свята України</h2>
+        <div class="holidays-action">
+          <button id="holidays-btn" class="btn" type="button">Показати вихідні</button>
+        </div>
+      </div>
+      <p id="holidays-status" class="muted" role="status" aria-live="polite"></p>
+      <ul id="holidays-list" class="cards"></ul>
+    </section>
   </main>
 
   <footer class="site-footer">
